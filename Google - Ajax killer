@@ -1,0 +1,15 @@
+
+[Patterns]
+Name = "Google | Ajax killer test-20110528"
+Active = TRUE
+URL = "www.google.co(.jp|m)/(search\? $TYPE(htm)|extern_js/f/ $TYPE(js)(^$OHDR(Referer: *\&tbm=(isch|mbl)*)))"
+Limit = 300
+Match = "$TYPE(js)$STOP()\k|"
+        "(/extern_js/f/[^.]+.js)\#$SET(#=?prox-$DTM(tc))|"
+        "(<a [^>]++ class=$AV(gbmt|gbzt *) [^>]++)\# onclick=$AV(*)"
+        "|"
+        "(^$URL(*\&tbo=1*))$SET(#=<script>document.location="\u&tbo=1";</script>)$STOP()|"
+        "(^$URL(*\&prmdo=1*))$SET(#=<script>document.location="\u&prmdo=1";</script>)$STOP()|"
+        "$NEST(<a [^>]++ id=$AV(showmodes|tbpi),</a>)"
+Replace = "\@"
+
